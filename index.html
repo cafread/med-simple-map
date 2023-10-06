@@ -48,22 +48,32 @@
             margin-right: 8px;
             opacity: 0.7;
         }
+        #infoSpider {
+          float: left;
+          width: 230px;
+          height: 230px;
+          transform: translate(-10px,-40px);
+          padding-left: 20px;
+          padding-right: 20px;
+          margin-bottom: -29px;
+        }
     </style>
 </head>
 <body>
     <div id='map'></div>
     <script type="text/javascript" src="us-states.js"></script>
+    <script type="text/javascript" src="spiderplot.js"></script>
     <script type="text/javascript">
     let factories = [
-        {"name": "Mars Factory",             "lat": 35.199079144133755, "lon": -84.86589242977573 },
+        {"name": "Mars Factory",             "lat": 35.19908, "lon": -84.86589},
     ];
     let supplierData = [
-        {"name": "International Paper",      "lat": 33.93540702295236,  "lon":  -81.09012549763904, "tco": 0.89},
-        {"name": "American Hemp LLC",        "lat": 36.1180898368624,   "lon":  -80.31071921757817, "tco": 0.49},
-        {"name": "Boring Hemp Company",      "lat": 45.44651445797659,  "lon": -122.27443164881302, "tco": 0.59},
-        {"name": "Delta Hemp Farm",          "lat": 42.7463782128696,   "lon": -124.5060926481742 , "tco": 0.69},
-        {"name": "CNY Hemp Processing Inc.", "lat": 42.850562893400955, "lon":  -75.85897166375831, "tco": 0.79},
-        {"name": "Seaman Co",                "lat": 42.56507680441345,  "lon":  -72.00508763247502, "tco": 0.39},
+        {"name": "International Paper",      "lat": 33.93540, "lon":  -81.09012, "tco": 0.89, "pnr": 0.65, "lca": 0.36, "rar": 0.60},
+        {"name": "American Hemp LLC",        "lat": 36.11808, "lon":  -80.31071, "tco": 0.49, "pnr": 0.49, "lca": 0.66, "rar": 0.45},
+        {"name": "Boring Hemp Company",      "lat": 45.44651, "lon": -122.27443, "tco": 0.59, "pnr": 0.66, "lca": 0.71, "rar": 0.66},
+        {"name": "Delta Hemp Farm",          "lat": 42.74637, "lon": -124.50609, "tco": 0.69, "pnr": 0.81, "lca": 0.73, "rar": 0.90},
+        {"name": "CNY Hemp Processing Inc.", "lat": 42.85056, "lon":  -75.85897, "tco": 0.79, "pnr": 0.76, "lca": 0.84, "rar": 0.83},
+        {"name": "Seaman Co",                "lat": 42.56507, "lon":  -72.00508, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
     ];
     const scoreColor = d3.scaleLinear()
         .domain([0.00, 1.00])
@@ -85,12 +95,14 @@
                 fillColor: getColor(state.properties.leg)
             };
         }
+        const pct = d3.format('.0%');
         // Tiles
         const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 8,
             minZoom: 5,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
+        map.attributionControl.addAttribution('Legislation data &copy; <a href="https://boulderweekly.com/boulderganic/2016-could-be-the-year-for-industrial-hemp/">National Hemp Association</a>');
         // Control that shows info on hover
         const info = L.control();
         info.onAdd = function (map) {
@@ -101,10 +113,10 @@
         info.update = function (d, e) {
             if (d && d.tco !== undefined) {
                 // Show supplier information
-                let contents = "<h4>" + d.name + "</h4>TCO: " + d.tco + "<br />";
-                contents += "PNR: " + d.pnr + "<br />";
-                contents += "LCA: " + d.lca + "<br />";
-                contents += "RAR: " + d.rar;
+                let contents = "<h4>" + d.name + "</h4>TCO: " + pct(d.tco) + "<br />";
+                contents += "PNR: " + pct(d.pnr) + "<br />";
+                contents += "LCA: " + pct(d.lca) + "<br />";
+                contents += "RAR: " + pct(d.rar);
                 this._div.innerHTML = contents;
                 d3.selectAll('circle')
                     .attr("stroke", "black")
@@ -116,7 +128,7 @@
                     .attr("fill-opacity", 0.9);
             } else {
                 // Clear
-                this._div.innerHTML = "";
+                this._div.innerHTML = "Select a Supplier to show details";
                 d3.selectAll('circle')
                     .attr("stroke", "black")
                     .attr("stroke-width", 0.9)
@@ -158,9 +170,14 @@
         svg.on("click", handleClick);
         function handleClick (e) {
             if (e.target.tagName === 'circle') {
-                info.update(e.srcElement.__data__, e.srcElement);
+                let thisData = e.srcElement.__data__;
+                info.update(thisData, e.srcElement);
+                d3.select('.info').append('svg').attr('id', 'infoSpider');
+                let spiderData = {"TCO": thisData.tco, "PNR": thisData.pnr, "LCA": thisData.lca, "RAR": thisData.rar};
+                singleSpider("#infoSpider", spiderData, {"width": 230, "height": 230, "color": "#226666", "maxValue": 1});
             } else {
                 info.update();
+                d3.select('#infoSpider').remove();
             }
         }
         
