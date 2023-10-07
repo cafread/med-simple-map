@@ -48,7 +48,7 @@
             margin-right: 8px;
             opacity: 0.7;
         }
-        #infoSpider {
+        #infoChart {
           float: left;
           width: 230px;
           height: 230px;
@@ -172,12 +172,14 @@
             if (e.target.tagName === 'circle') {
                 let thisData = e.srcElement.__data__;
                 info.update(thisData, e.srcElement);
-                d3.select('.info').append('svg').attr('id', 'infoSpider');
+                d3.select('.info').append('svg').attr('id', 'infoChart');
                 let spiderData = {"TCO": thisData.tco, "PNR": thisData.pnr, "LCA": thisData.lca, "RAR": thisData.rar};
-                singleSpider("#infoSpider", spiderData, {"width": 230, "height": 230, "color": "#226666", "maxValue": 1});
+                let infoColor = d3.scaleSequential().domain([0, 1]).interpolator(d3.interpolateYlGn);
+                singleRadar("#infoChart", spiderData, {"width": 230, "height": 230, "color": infoColor, "maxValue": 1});
+                //singleSpider("#infoChart", spiderData, {"width": 230, "height": 230, "color": infoColor, "maxValue": 1});
             } else {
                 info.update();
-                d3.select('#infoSpider').remove();
+                d3.select('#infoChart').remove();
             }
         }
         
