@@ -118,7 +118,7 @@ function singleRadar (id, dat, options = {}) {
     let config = {
         width: 200,
         height: 200,
-        levels: 2,
+        levels: 5,
         opacityArea: 0.8,
         color: "#455C91",
         chartFrac: 0.8
@@ -153,7 +153,7 @@ function singleRadar (id, dat, options = {}) {
             .attr("class", "spiderAxis")
             .style("stroke", "grey")
             .style("stroke-width", "1.3px");
-    let webLines = Array.from({length: config.levels}).map((d, i) => (i + 1) / config.levels);
+    let webLines = Array.from({length: config.levels}).map((d, i) => radius * (i + 1) / config.levels);
     // Draw webLines as circles
     g.selectAll(".webLine")
         .data(webLines)
