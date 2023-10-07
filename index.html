@@ -73,12 +73,12 @@
         {"name": "Boring Hemp Company",      "lat": 45.44651, "lon": -122.27443, "tco": 0.59, "pnr": 0.66, "lca": 0.71, "rar": 0.66},
         {"name": "Delta Hemp Farm",          "lat": 42.74637, "lon": -124.50609, "tco": 0.69, "pnr": 0.81, "lca": 0.73, "rar": 0.90},
         {"name": "CNY Hemp Processing Inc.", "lat": 42.85056, "lon":  -75.85897, "tco": 0.79, "pnr": 0.76, "lca": 0.84, "rar": 0.83},
-        {"name": "Seaman Co",                "lat": 42.56507, "lon":  -72.00508, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Seaman Co",                "lat": 42.56507, "lon":  -72.00508, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44}
     ];
     const scoreColor = d3.scaleLinear()
         .domain([0.00, 1.00])
         .range(["red", "green"])
-        .interpolate(d3.interpolateCubehelix.gamma(3));;
+        .interpolate(d3.interpolateCubehelix.gamma(3));
     </script>
     <script type="text/javascript">
         const map = L.map('map').setView([37.8, -96], 5);
@@ -136,15 +136,12 @@
             }
         };
         info.addTo(map);
-        
         // States
         const states = L.geoJson(statesData, {style}).addTo(map);
-        
         // Add factory
         let factory = L.marker([35.199079144133755, -84.86589242977573])
                        .addTo(map)
                        .bindPopup("Factory");
-        
         // Add Suppliers
         let svg = d3.select("#map").select("svg");
         svg.attr("pointer-events", "auto")
@@ -159,8 +156,9 @@
                     .attr("stroke-width", 0.9)
                     .attr("fill-opacity", 0.4);
 
-        // Function that update circle position if something change
+        // Function that update circle position if something changes
         function updateCircles() {
+            info.update(); // Not doing this can lead to some projection bugs
             d3.selectAll("circle")
                 .attr("cx", d => map.latLngToLayerPoint([d.lat, d.lon]).x)
                 .attr("cy", d => map.latLngToLayerPoint([d.lat, d.lon]).y)
@@ -179,10 +177,8 @@
                 //singleSpider("#infoChart", spiderData, {"width": 230, "height": 230, "color": infoColor, "maxValue": 1});
             } else {
                 info.update();
-                d3.select('#infoChart').remove();
             }
         }
-        
         // Legend
         const legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
