@@ -39,7 +39,6 @@ function singleSpider (id, dat, options = {}) {
     // color can be a scaling function, or a single value
     function color (val) {
         if (typeof(config.color) === "string") return config.color;
-        console.log(val);
         return config.color(val / config.chartFrac);
     }
     let axNames = Object.keys(dat);
@@ -130,7 +129,6 @@ function singleRadar (id, dat, options = {}) {
     // color can be a scaling function, or a single value
     function color (val) {
         if (typeof(config.color) === "string") return config.color;
-        console.log(val);
         return config.color(val / config.chartFrac);
     }
     let axNames = Object.keys(dat);
