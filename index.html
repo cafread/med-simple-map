@@ -117,15 +117,25 @@
     <script type="text/javascript" src="spiderplot.js"></script>
     <script type="text/javascript">
     let factories = [
-        {"name": "Mars Factory",             "lat": 35.19908, "lon": -84.86589},
+        {"name": "Mars Factory", "lat": 35.19908, "lon": -84.86589},
     ];
     let supplierData = [
-        {"name": "International Paper",      "lat": 33.93540, "lon":  -81.09012, "tco": 0.89, "pnr": 0.65, "lca": 0.36, "rar": 0.60},
-        {"name": "American Hemp LLC",        "lat": 36.11808, "lon":  -80.31071, "tco": 0.49, "pnr": 0.49, "lca": 0.66, "rar": 0.45},
-        {"name": "Boring Hemp Company",      "lat": 45.44651, "lon": -122.27443, "tco": 0.59, "pnr": 0.66, "lca": 0.71, "rar": 0.66},
-        {"name": "Delta Hemp Farm",          "lat": 42.74637, "lon": -124.50609, "tco": 0.69, "pnr": 0.81, "lca": 0.73, "rar": 0.90},
-        {"name": "CNY Hemp Processing Inc.", "lat": 42.85056, "lon":  -75.85897, "tco": 0.79, "pnr": 0.76, "lca": 0.84, "rar": 0.83},
-        {"name": "Seaman Co",                "lat": 42.56507, "lon":  -72.00508, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44}
+        {"name": "Midwest Hemp Tech",          "lat": 37.69162, "lon":  -96.96218, "tco": 0.89, "pnr": 0.65, "lca": 0.36, "rar": 0.60},
+        {"name": "Paragon Processing",         "lat": 37.93417, "lon": -104.81956, "tco": 0.49, "pnr": 0.49, "lca": 0.66, "rar": 0.45},
+        {"name": "Whitefield Global Holdings", "lat": 40.74898, "lon":  -89.43798, "tco": 0.59, "pnr": 0.66, "lca": 0.71, "rar": 0.66},
+        {"name": "South Bend Ind Hemp",        "lat": 38.34081, "lon":  -98.85137, "tco": 0.69, "pnr": 0.81, "lca": 0.73, "rar": 0.90},
+        {"name": "Bastcore",                   "lat": 34.01254, "lon":  -86.31684, "tco": 0.79, "pnr": 0.76, "lca": 0.84, "rar": 0.83},
+        {"name": "Panda Biotech",              "lat": 34.01254, "lon":  -98.55663, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Bayou City Hemp",            "lat": 29.78975, "lon":  -95.67329, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "AH Meyer & Sons",            "lat": 43.99782, "lon":  -97.36250, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Dakota Hemp",                "lat": 43.01473, "lon":  -97.13540, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Hempitecture",               "lat": 42.65100, "lon": -114.43926, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Ind Hemp",                   "lat": 47.82611, "lon": -110.66541, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Hemprise",                   "lat": 38.39008, "lon":  -85.67150, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Tiger Fiber",                "lat": 38.53539, "lon":  -90.44003, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Lazarus Naturals",           "lat": 45.55681, "lon": -122.49331, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Fibersource",                "lat": 49.28000, "lon": -123.12000, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"name": "Blue Sky Hemp Ventures",     "lat": 52.19197, "lon": -106.68142, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44}
     ];
     const scoreColor = d3.scaleLinear()
         .domain([0.00, 1.00])
@@ -143,7 +153,7 @@
             localStorage.setItem("hempMeasure", "legal");
         }
         let measChoice = localStorage.getItem("hempMeasure");
-        
+
         function getColor(d) {
             if (measChoice === "legal") return ['rgba(50,50,50,0.3)', 'rgba(200,200,50,0.6)', 'rgba(150,255,50,0.6)', 'rgba(0,200,0,0.6)'][d];
             return prodColor(d);
@@ -204,7 +214,7 @@
         }
         drawStates();
         // Add factory
-        let factory = L.marker([35.199079144133755, -84.86589242977573])
+        let factory = L.marker([31.491294702636274, -97.19916554233393])
                        .addTo(map)
                        .bindPopup("Factory");
         // Add Suppliers
@@ -244,7 +254,7 @@
                 info.update();
             }
         }
-        
+
         // Control for what is colouring the state metric - ideally put this inside the legend
         const datToggle = L.control({position: 'bottomright'});
         datToggle.onAdd = function (map) {
@@ -264,7 +274,7 @@
             return div;
         };
         legend.addTo(map);
-        
+
         // Handle measure
         let measToggle = document.getElementById("measChoice")
         // Toggle on if measChoice is Production
