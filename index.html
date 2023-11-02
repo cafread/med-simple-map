@@ -84,10 +84,13 @@
           left: 0;
           right: 0;
           bottom: 0;
-          background-color: rgba(0,200,0,0.6);
+          background-color: #CCC;
           -webkit-transition: .4s;
           transition: .4s;
           transform: translateY(-4px);
+        }
+        #measChoice+span {
+          background-color: rgba(0,200,0,0.6);
         }
         .slider:before {
           position: absolute;
@@ -100,7 +103,9 @@
           -webkit-transition: .4s;
           transition: .4s;
         }
-        input:checked + .slider {background-color: #2196F3;}
+        #measChoice:checked + .slider {background-color: #2196F3;}
+        #procChoice:checked + .slider {background-color: rgb(255 233 26);}
+        #millChoice:checked + .slider {background-color: rgb(187 96 5);}
         input:focus + .slider {box-shadow: 0 0 1px #2196F3;}
         input:checked + .slider:before {
           -webkit-transform: translateX(26px);
@@ -119,7 +124,7 @@
     let factories = [
         {"name": "Mars Factory", "lat": 35.19908, "lon": -84.86589},
     ];
-    let supplierData = [
+    let processorData = [
         {"name": "Midwest Hemp Tech",          "lat": 37.69162, "lon":  -96.96218, "tco": 0.89, "pnr": 0.65, "lca": 0.36, "rar": 0.60},
         {"name": "Paragon Processing",         "lat": 37.93417, "lon": -104.81956, "tco": 0.49, "pnr": 0.49, "lca": 0.66, "rar": 0.45},
         {"name": "Whitefield Global Holdings", "lat": 40.74898, "lon":  -89.43798, "tco": 0.59, "pnr": 0.66, "lca": 0.71, "rar": 0.66},
@@ -137,6 +142,12 @@
         {"name": "Fibersource",                "lat": 49.28000, "lon": -123.12000, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
         {"name": "Blue Sky Hemp Ventures",     "lat": 52.19197, "lon": -106.68142, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44}
     ];
+    let millData = [
+        {"name": "Green Field Paper Company",  "lat": 32.83332, "lon": -117.16304, "asu": "Y", "hmp": "Y", "sou": "Bought", "usa": "Y", "blc": "N", "p2p": "Y", "pur": "N", "bar": "N", "slt": "Y", "she": "Y", "sto": "Y", "scl": "Good", "int": "Strong", "smp": "Sending"},
+        {"name": "Cottrell Paper",             "lat": 43.06239, "lon":  -73.91727, "asu": "Y", "hmp": "Y", "sou": "Bought", "usa": "Y", "blc": "N", "p2p": "Y", "pur": "Y", "bar": "N", "slt": "Y", "she": "Y", "sto": "Y", "scl": "Good", "int": "Strong", "smp": "Sending"},
+        {"name": "Mohawk Paper",               "lat": 42.62685, "lon":  -73.75978, "asu": "Y", "hmp": "Y", "sou": "?",      "usa": "?", "blc": "N", "p2p": "Y", "pur": "N", "bar": "N", "slt": "?", "she": "Y", "sto": "Y", "scl": "?",    "int": "Poor",   "smp": "No rsp" },
+        {"name": "French Paper Mill",          "lat": 41.82064, "lon":  -86.25900, "asu": "N", "hmp": "N", "sou": "?",      "usa": "?", "blc": "?", "p2p": "?", "pur": "?", "bar": "?", "slt": "N", "she": "Y", "sto": "Y", "scl": "?",    "int": "Poor",   "smp": "?"      },
+    ];
     const scoreColor = d3.scaleLinear()
         .domain([0.00, 1.00])
         .range(["red", "green"])
@@ -148,11 +159,14 @@
     </script>
     <script type="text/javascript">
         const map = L.map('map').setView([37.8, -96], 5);
-        // measChoice
-        if (localStorage.getItem("hempMeasure") === null) {
-            localStorage.setItem("hempMeasure", "legal");
-        }
+        // User choices
+        if (localStorage.getItem("hempMeasure") === null) localStorage.setItem("hempMeasure", "legal");
+        if (localStorage.getItem("millShow"   ) === null) localStorage.setItem("millShow", false);
+        if (localStorage.getItem("procShow"   ) === null) localStorage.setItem("procShow", false);
+        
         let measChoice = localStorage.getItem("hempMeasure");
+        let millChoice = localStorage.getItem("millShow");
+        let procChoice = localStorage.getItem("procShow");
 
         function getColor(d) {
             if (measChoice === "legal") return ['rgba(50,50,50,0.3)', 'rgba(200,200,50,0.6)', 'rgba(150,255,50,0.6)', 'rgba(0,200,0,0.6)'][d];
@@ -177,6 +191,7 @@
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
         map.attributionControl.addAttribution('Legislation data &copy; <a href="https://boulderweekly.com/boulderganic/2016-could-be-the-year-for-industrial-hemp/">National Hemp Association</a>');
+        
         // Control that shows info on hover
         const info = L.control();
         info.onAdd = function (map) {
@@ -207,6 +222,7 @@
             }
         };
         info.addTo(map);
+        
         // States
         function drawStates () {
             d3.selectAll("path").remove();
@@ -217,28 +233,46 @@
         let factory = L.marker([31.491294702636274, -97.19916554233393])
                        .addTo(map)
                        .bindPopup("Factory");
-        // Add Suppliers
+        
+        // Add Processors
         let svg = d3.select("#map").select("svg");
-        svg.attr("pointer-events", "auto")
-            .selectAll("myCircles")
-            .data(supplierData)
+        svg.attr("pointer-events", "auto");
+        svg.selectAll(".proc")
+            .data(processorData)
                 .join("circle")
                     .attr("cx", d => map.latLngToLayerPoint([d.lat, d.lon]).x)
                     .attr("cy", d => map.latLngToLayerPoint([d.lat, d.lon]).y)
+                    .attr("class", "proc")
                     .attr("r", 14)
-                    .style("fill", d => scoreColor(d.tco))
+                    .style("fill", "rgb(255 233 26)")
                     .attr("stroke", "black")
                     .attr("stroke-width", 0.9)
                     .attr("fill-opacity", 0.9);
 
+        svg.selectAll(".mill")
+            .data(millData)
+                .join("circle")
+                    .attr("cx", d => map.latLngToLayerPoint([d.lat, d.lon]).x)
+                    .attr("cy", d => map.latLngToLayerPoint([d.lat, d.lon]).y)
+                    .attr("class", "mill")
+                    .attr("r", 14)
+                    .style("fill", "rgb(187 96 5)")
+                    .attr("stroke", "black")
+                    .attr("stroke-width", 0.9)
+                    .attr("fill-opacity", 0.9);
+        
         // Function that update circle position if something changes
         function updateCircles() {
             info.update(); // Not doing this can lead to some projection bugs
             d3.selectAll("circle")
                 .attr("cx", d => map.latLngToLayerPoint([d.lat, d.lon]).x)
-                .attr("cy", d => map.latLngToLayerPoint([d.lat, d.lon]).y)
+                .attr("cy", d => map.latLngToLayerPoint([d.lat, d.lon]).y);
+            d3.selectAll('.proc').attr("visibility", d => procChoice ? "visible" : "hidden");
+            d3.selectAll('.mill').attr("visibility", d => millChoice ? "visible" : "hidden");
         }
-        // If the user change the map (zoom or drag), I update circle position:
+        updateCircles();
+        
+        // If the user change the map (zoom or drag), update circle position:
         map.on("moveend", updateCircles)
         svg.on("click", handleClick);
         function handleClick (e) {
@@ -255,14 +289,20 @@
             }
         }
 
-        // Control for what is colouring the state metric - ideally put this inside the legend
+        // Control for what is colouring the state metric
         const datToggle = L.control({position: 'bottomright'});
         datToggle.onAdd = function (map) {
             this._div = L.DomUtil.create('div', 'datToggle');
-            this._div.innerHTML = 'State measure <label class="switch"><input type="checkbox" id="measChoice"><span class="slider"></span></label>';
+            let content = 'State measure <label class="switch"><input type="checkbox" id="measChoice"><span class="slider"></span></label>';
+            content    += '<br>Show processors <label class="switch"><input type="checkbox" id="procChoice"><span class="slider"></span></label>';
+            content    += '<br>Show mills <label class="switch"><input type="checkbox" id="millChoice"><span class="slider"></span></label>';
+            this._div.innerHTML = content
             return this._div;
         };
         datToggle.addTo(map);
+        
+        
+        
         // Legend
         const legend = L.control({position: 'bottomright'});
         legend.onAdd = function (map) {
@@ -275,8 +315,11 @@
         };
         legend.addTo(map);
 
-        // Handle measure
-        let measToggle = document.getElementById("measChoice")
+
+
+
+        // Handle controls
+        let measToggle = document.getElementById("measChoice");
         // Toggle on if measChoice is Production
         measToggle.checked = measChoice === "production";
         measToggle.addEventListener('click', () => {
@@ -286,7 +329,27 @@
             legend.addTo(map);
             drawStates();
             info.update();
+            updateCircles();
         });
+        
+        let procToggle = document.getElementById("procChoice");
+        procToggle.checked = procChoice;
+        procToggle.addEventListener('click', () => {
+            procChoice = document.querySelector('#procChoice').checked;
+            localStorage.setItem("procShow", procChoice);
+            info.update();
+            updateCircles();
+        });
+        
+        let millToggle = document.getElementById("millChoice");
+        millToggle.checked = millChoice;
+        millToggle.addEventListener('click', () => {
+            millChoice = document.querySelector('#millChoice').checked;
+            localStorage.setItem("millShow", millChoice);
+            info.update();
+            updateCircles();
+        });
+        
     </script>
 </body>
 </html>

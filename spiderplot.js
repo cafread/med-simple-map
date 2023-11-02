@@ -188,7 +188,7 @@ function singleRadar (id, dat, options = {}) {
             .attr("dy", "0.35em")
             .text((d, i) => axNames[i])
             .style("font-family", "sans-serif")
-            .style("font-size", radius / 20)
+            .style("font-size", radius / 6)
             .attr("text-anchor", (d, i) => genAnchor(i, axsCount))
             .attr("fill", "#737373");
 }
