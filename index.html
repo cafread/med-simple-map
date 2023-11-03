@@ -30,7 +30,7 @@
             background: rgba(255,255,255,0.8);
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
             border-radius: 5px;
-            text-align: right;
+            //text-align: right;
         }
         .info h4 {
             margin: 0 0 5px;
@@ -124,29 +124,29 @@
     let factories = [
         {"name": "Mars Factory", "lat": 35.19908, "lon": -84.86589},
     ];
-    let processorData = [
-        {"name": "Midwest Hemp Tech",          "lat": 37.69162, "lon":  -96.96218, "tco": 0.89, "pnr": 0.65, "lca": 0.36, "rar": 0.60},
-        {"name": "Paragon Processing",         "lat": 37.93417, "lon": -104.81956, "tco": 0.49, "pnr": 0.49, "lca": 0.66, "rar": 0.45},
-        {"name": "Whitefield Global Holdings", "lat": 40.74898, "lon":  -89.43798, "tco": 0.59, "pnr": 0.66, "lca": 0.71, "rar": 0.66},
-        {"name": "South Bend Ind Hemp",        "lat": 38.34081, "lon":  -98.85137, "tco": 0.69, "pnr": 0.81, "lca": 0.73, "rar": 0.90},
-        {"name": "Bastcore",                   "lat": 34.01254, "lon":  -86.31684, "tco": 0.79, "pnr": 0.76, "lca": 0.84, "rar": 0.83},
-        {"name": "Panda Biotech",              "lat": 34.01254, "lon":  -98.55663, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "Bayou City Hemp",            "lat": 29.78975, "lon":  -95.67329, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "AH Meyer & Sons",            "lat": 43.99782, "lon":  -97.36250, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "Dakota Hemp",                "lat": 43.01473, "lon":  -97.13540, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "Hempitecture",               "lat": 42.65100, "lon": -114.43926, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "Ind Hemp",                   "lat": 47.82611, "lon": -110.66541, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "Hemprise",                   "lat": 38.39008, "lon":  -85.67150, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "Tiger Fiber",                "lat": 38.53539, "lon":  -90.44003, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "Lazarus Naturals",           "lat": 45.55681, "lon": -122.49331, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "Fibersource",                "lat": 49.28000, "lon": -123.12000, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
-        {"name": "Blue Sky Hemp Ventures",     "lat": 52.19197, "lon": -106.68142, "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44}
+    let processorData = [ // Use asu to colour the circles
+        {"type": "proc", "name": "Midwest Hemp Tech",          "lat": 37.69162, "lon":  -96.96218, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "External", "sea": "N", "sto": "Y",       "hrv": "Med",  "fnv": "Med",  "scl": "Good", "int": "Strong",  "tco": 0.89, "pnr": 0.65, "lca": 0.36, "rar": 0.60},
+        {"type": "proc", "name": "Paragon Processing",         "lat": 37.93417, "lon": -104.81956, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "None",     "sea": "N", "sto": "Limited", "hrv": "High", "fnv": "High", "scl": "OK",   "int": "Neutral", "tco": 0.49, "pnr": 0.49, "lca": 0.66, "rar": 0.45},
+        {"type": "proc", "name": "Whitefield Global Holdings", "lat": 40.74898, "lon":  -89.43798, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "None",     "sea": "N", "sto": "Limited", "hrv": "Med",  "fnv": "High", "scl": "OK",   "int": "Neutral", "tco": 0.59, "pnr": 0.66, "lca": 0.71, "rar": 0.66},
+        {"type": "proc", "name": "South Bend Ind Hemp",        "lat": 38.34081, "lon":  -98.85137, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "External", "sea": "N", "sto": "Y",       "hrv": "Med",  "fnv": "Med",  "scl": "Good", "int": "Strong",  "tco": 0.69, "pnr": 0.81, "lca": 0.73, "rar": 0.90},
+        {"type": "proc", "name": "Bastcore",                   "lat": 34.01254, "lon":  -86.31684, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "Internal", "sea": "N", "sto": "Y",       "hrv": "Med",  "fnv": "Med",  "scl": "Good", "int": "Strong",  "tco": 0.79, "pnr": 0.76, "lca": 0.84, "rar": 0.83},
+        {"type": "proc", "name": "Panda Biotech",              "lat": 34.01254, "lon":  -98.55663, "asu": "N", "hrd": "",  "fns": "",  "usf": "",  "rpr": "",         "sea": "",  "sto": "",        "hrv": "",     "fnv": "",     "scl": "",     "int": ""      ,  "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "Bayou City Hemp",            "lat": 29.78975, "lon":  -95.67329, "asu": "N", "hrd": "",  "fns": "",  "usf": "",  "rpr": "",         "sea": "",  "sto": "",        "hrv": "",     "fnv": "",     "scl": "",     "int": ""      ,  "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "AH Meyer & Sons",            "lat": 43.99782, "lon":  -97.36250, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "External", "sea": "N", "sto": "Y",       "hrv": "Med",  "fnv": "Med",  "scl": "Good", "int": "Strong",  "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "Dakota Hemp",                "lat": 43.01473, "lon":  -97.13540, "asu": "N", "hrd": "",  "fns": "",  "usf": "",  "rpr": "",         "sea": "",  "sto": "",        "hrv": "",     "fnv": "",     "scl": "",     "int": ""      ,  "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "Hempitecture",               "lat": 42.65100, "lon": -114.43926, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "None",     "sea": "N", "sto": "Limited", "hrv": "High", "fnv": "High", "scl": "OK",   "int": "Neutral", "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "Ind Hemp",                   "lat": 47.82611, "lon": -110.66541, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "External", "sea": "N", "sto": "Y",       "hrv": "Med",  "fnv": "High", "scl": "OK",   "int": "Strong",  "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "Hemprise",                   "lat": 38.39008, "lon":  -85.67150, "asu": "N", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "",         "sea": "",  "sto": "",        "hrv": "",     "fnv": "",     "scl": "",     "int": "",        "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "Tiger Fiber",                "lat": 38.53539, "lon":  -90.44003, "asu": "Y", "hrd": "Y", "fns": "N", "usf": "Y", "rpr": "None",     "sea": "N", "sto": "Y",       "hrv": "High", "fnv": "",     "scl": "Good", "int": "Strong",  "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "Lazarus Naturals",           "lat": 45.55681, "lon": -122.49331, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "None",     "sea": "N", "sto": "Limited", "hrv": "High", "fnv": "High", "scl": "OK",   "int": "Neutral", "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "Fibersource",                "lat": 49.28000, "lon": -123.12000, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "N", "rpr": "External", "sea": "Y", "sto": "Y",       "hrv": "Low",  "fnv": "Low",  "scl": "Good", "int": "Strong",  "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44},
+        {"type": "proc", "name": "Blue Sky Hemp Ventures",     "lat": 52.19197, "lon": -106.68142, "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "N", "rpr": "None",     "sea": "Y", "sto": "Y",       "hrv": "Med",  "fnv": "",     "scl": "Good", "int": "Strong",  "tco": 0.39, "pnr": 0.70, "lca": 0.52, "rar": 0.44}
     ];
     let millData = [
-        {"name": "Green Field Paper Company",  "lat": 32.83332, "lon": -117.16304, "asu": "Y", "hmp": "Y", "sou": "Bought", "usa": "Y", "blc": "N", "p2p": "Y", "pur": "N", "bar": "N", "slt": "Y", "she": "Y", "sto": "Y", "scl": "Good", "int": "Strong", "smp": "Sending"},
-        {"name": "Cottrell Paper",             "lat": 43.06239, "lon":  -73.91727, "asu": "Y", "hmp": "Y", "sou": "Bought", "usa": "Y", "blc": "N", "p2p": "Y", "pur": "Y", "bar": "N", "slt": "Y", "she": "Y", "sto": "Y", "scl": "Good", "int": "Strong", "smp": "Sending"},
-        {"name": "Mohawk Paper",               "lat": 42.62685, "lon":  -73.75978, "asu": "Y", "hmp": "Y", "sou": "?",      "usa": "?", "blc": "N", "p2p": "Y", "pur": "N", "bar": "N", "slt": "?", "she": "Y", "sto": "Y", "scl": "?",    "int": "Poor",   "smp": "No rsp" },
-        {"name": "French Paper Mill",          "lat": 41.82064, "lon":  -86.25900, "asu": "N", "hmp": "N", "sou": "?",      "usa": "?", "blc": "?", "p2p": "?", "pur": "?", "bar": "?", "slt": "N", "she": "Y", "sto": "Y", "scl": "?",    "int": "Poor",   "smp": "?"      },
+        {"type": "mill", "name": "Green Field Paper Company",  "lat": 32.83332, "lon": -117.16304, "asu": "Y", "hmp": "Y", "sou": "Bought", "usa": "Y", "blc": "N", "p2p": "Y", "pur": "N", "bar": "N", "slt": "Y", "she": "Y", "sto": "Y", "scl": "Good", "int": "Strong", "smp": "Sending"},
+        {"type": "mill", "name": "Cottrell Paper",             "lat": 43.06239, "lon":  -73.91727, "asu": "Y", "hmp": "Y", "sou": "Bought", "usa": "Y", "blc": "N", "p2p": "Y", "pur": "Y", "bar": "N", "slt": "Y", "she": "Y", "sto": "Y", "scl": "Good", "int": "Strong", "smp": "Sending"},
+        {"type": "mill", "name": "Mohawk Paper",               "lat": 42.62685, "lon":  -73.75978, "asu": "Y", "hmp": "Y", "sou": "?",      "usa": "?", "blc": "N", "p2p": "Y", "pur": "N", "bar": "N", "slt": "?", "she": "Y", "sto": "Y", "scl": "?",    "int": "Poor",   "smp": "No rsp" },
+        {"type": "mill", "name": "French Paper Mill",          "lat": 41.82064, "lon":  -86.25900, "asu": "N", "hmp": "N", "sou": "?",      "usa": "?", "blc": "?", "p2p": "?", "pur": "?", "bar": "?", "slt": "N", "she": "Y", "sto": "Y", "scl": "?",    "int": "Poor",   "smp": "?"      },
     ];
     const scoreColor = d3.scaleLinear()
         .domain([0.00, 1.00])
@@ -199,14 +199,53 @@
             this.update();
             return this._div;
         };
+        
+        function makeInfoContent (d) {
+            let bgColor = d.type === "proc" ? "#fff380" : "#ffd5ab";
+            let contents = "<div style='background-color: " + bgColor + "'><h4>" + d.name + "</h4></div><table>";
+            if (d.type === "proc") {
+                // "asu": "Y", "hrd": "Y", "fns": "Y", "usf": "Y", "rpr": "External", "sea": "N", "sto": "Y", "hrv": "High", "fnv": "High", "scl": "OK", "int": "Strong"
+                contents += "<tr><td>Available Supply" + "</td><td>" + d.asu + "</td></tr>";
+                contents += "<tr><td>Hurd"             + "</td><td>" + d.hrd + "</td></tr>";
+                contents += "<tr><td>Fines"            + "</td><td>" + d.fns + "</td></tr>";
+                contents += "<tr><td>US Feedstock"     + "</td><td>" + d.usf + "</td></tr>";
+                contents += "<tr><td>Ref. process"     + "</td><td>" + d.rpr + "</td></tr>";
+                contents += "<tr><td>Seas Mgmt"        + "</td><td>" + d.sea + "</td></tr>";
+                contents += "<tr><td>Storage"          + "</td><td>" + d.sto + "</td></tr>";
+                contents += "<tr><td>Hurd $"           + "</td><td>" + d.hrv + "</td></tr>";
+                contents += "<tr><td>Fines $"          + "</td><td>" + d.fnv + "</td></tr>";
+                contents += "<tr><td>Scalability"      + "</td><td>" + d.scl + "</td></tr>";
+                contents += "<tr><td>Interest"         + "</td><td>" + d.int + "</td></tr>";
+            } else { // Mill
+                // "asu": "Y", "hmp": "Y", "sou": "Bought", "usa": "Y", "blc": "N", "p2p": "Y", "pur": "N", "bar": "N", "slt": "Y", "she": "Y", "sto": "Y", "scl": "Good", "int": "Strong", "smp": "Sending"
+                contents += "<tr><td>Available Supply: " + "</td><td>" + d.asu + "</td></tr>";
+                contents += "<tr><td>Hemp Fibre: "       + "</td><td>" + d.hmp + "</td></tr>";
+                contents += "<tr><td>Fibre Source: "     + "</td><td>" + d.sou + "</td></tr>";
+                contents += "<tr><td>US Feedstock: "     + "</td><td>" + d.usa + "</td></tr>";
+                contents += "<tr><td>Bleaching: "        + "</td><td>" + d.blc + "</td></tr>";
+                contents += "<tr><td>Pulp to Paper: "    + "</td><td>" + d.p2p + "</td></tr>";
+                contents += "<tr><td>100% Hemp Paper: "  + "</td><td>" + d.pur + "</td></tr>";
+                contents += "<tr><td>Barrier: "          + "</td><td>" + d.bar + "</td></tr>";
+                contents += "<tr><td>Slitting: "         + "</td><td>" + d.slt + "</td></tr>";
+                contents += "<tr><td>Sheeting: "         + "</td><td>" + d.she + "</td></tr>";
+                contents += "<tr><td>Storage: "          + "</td><td>" + d.sto + "</td></tr>";
+                contents += "<tr><td>Scalability: "      + "</td><td>" + d.scl + "</td></tr>";
+                contents += "<tr><td>Interest: "         + "</td><td>" + d.int + "</td></tr>";
+                contents += "<tr><td>Samples: "          + "</td><td>" + d.smp + "</td></tr>";
+            }
+            contents += "</table>";
+            return contents;
+        }
+        
+        
         info.update = function (d, e) {
-            if (d && d.tco !== undefined) {
+            if (d && d.name !== undefined) {
                 // Show supplier information
-                let contents = "<h4>" + d.name + "</h4>TCO: " + pct(d.tco) + "<br />";
-                contents += "PNR: " + pct(d.pnr) + "<br />";
-                contents += "LCA: " + pct(d.lca) + "<br />";
-                contents += "RAR: " + pct(d.rar);
-                this._div.innerHTML = contents;
+                //let contents = "<h4>" + d.name + "</h4>TCO: " + pct(d.tco) + "<br />";
+                //contents += "PNR: " + pct(d.pnr) + "<br />";
+                //contents += "LCA: " + pct(d.lca) + "<br />";
+                //contents += "RAR: " + pct(d.rar);
+                this._div.innerHTML = makeInfoContent(d);
                 d3.selectAll('circle')
                     .attr("stroke", "black")
                     .attr("stroke-width", 0.9);
@@ -247,7 +286,7 @@
                     .style("fill", "rgb(255 233 26)")
                     .attr("stroke", "black")
                     .attr("stroke-width", 0.9)
-                    .attr("fill-opacity", 0.9);
+                    .attr("fill-opacity", d => d.asu === "Y" ? 1 : 0.4);
 
         svg.selectAll(".mill")
             .data(millData)
@@ -259,7 +298,7 @@
                     .style("fill", "rgb(187 96 5)")
                     .attr("stroke", "black")
                     .attr("stroke-width", 0.9)
-                    .attr("fill-opacity", 0.9);
+                    .attr("fill-opacity", d => d.asu === "Y" ? 1 : 0.4);
         
         // Function that update circle position if something changes
         function updateCircles() {
@@ -279,10 +318,10 @@
             if (e.target.tagName === 'circle') {
                 let thisData = e.srcElement.__data__;
                 info.update(thisData, e.srcElement);
-                d3.select('.info').append('svg').attr('id', 'infoChart');
-                let spiderData = {"TCO": thisData.tco, "PNR": thisData.pnr, "LCA": thisData.lca, "RAR": thisData.rar};
-                let infoColor = d3.scaleSequential().domain([0, 1]).interpolator(d3.interpolateYlGn);
-                singleRadar("#infoChart", spiderData, {"width": 230, "height": 230, "color": infoColor, "maxValue": 1});
+                //d3.select('.info').append('svg').attr('id', 'infoChart');
+                //let spiderData = {"TCO": thisData.tco, "PNR": thisData.pnr, "LCA": thisData.lca, "RAR": thisData.rar};
+                //let infoColor = d3.scaleSequential().domain([0, 1]).interpolator(d3.interpolateYlGn);
+                //singleRadar("#infoChart", spiderData, {"width": 230, "height": 230, "color": infoColor, "maxValue": 1});
                 //singleSpider("#infoChart", spiderData, {"width": 230, "height": 230, "color": infoColor, "maxValue": 1});
             } else {
                 info.update();
